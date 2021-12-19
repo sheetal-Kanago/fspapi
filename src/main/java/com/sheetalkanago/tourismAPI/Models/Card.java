@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.lang.reflect.Field;
 import java.util.Date;
 
 @Entity
@@ -15,6 +16,7 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cardID;
     private String cardName;
+    private String address;
     private double lat;
     private double lng;
     private String description;
@@ -27,9 +29,10 @@ public class Card {
 
     public Card() {}
 
-    public Card(String cardName, String description) {
+    public Card(String cardName, String description, String address) {
         this.cardName = cardName;
         this.description = description;
+        this.address = address;
     }
 
     public int getCardID() {
@@ -40,6 +43,14 @@ public class Card {
         this.cardID = cardID;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getCardName() {
         return cardName;
     }
@@ -47,6 +58,7 @@ public class Card {
     public void setCardName(String cardName) {
         this.cardName = cardName;
     }
+
 
     public double getLat() {
         return lat;
