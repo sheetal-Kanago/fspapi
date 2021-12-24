@@ -33,7 +33,7 @@ public class CardController {
 
     @GetMapping("/card/{cardID}")
     public ResponseEntity<Card> getCard(String cardID){
-        return ResponseEntity.status(HttpStatus.OK)
+        return ResponseEntity.status(HttpStatus.OK).body(cardRepository.getById(parseInt(cardID)));
     }
 
     @PostMapping("/card")
@@ -49,19 +49,19 @@ public class CardController {
         {
             throw new ResourceNotFoundException();
         }else{
-            Card updatedCard = cardRepository.findById(parseInt(requestedCardID)).orElseThrow();
+            Card card = cardRepository.findById(parseInt(requestedCardID)).orElseThrow();
 
-            BeanWrapper wrapper = new BeanWrapperImpl(updatedCard);
+            BeanWrapper wrapper = new BeanWrapperImpl(card);
             wrapper.setPropertyValues(fields);
-            updatedCard = (Card) wrapper.getWrappedInstance();
+            card = (Card) wrapper.getWrappedInstance();
 
 //            System.out.println(updatedCard);
-            cardRepository.save(updatedCard);
+            cardRepository.save(card);
 
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .header("Card Updated:", String.valueOf(requestedCardID))
-                    .body(updatedCard);
+                    .body(card);
         }
     }
 
